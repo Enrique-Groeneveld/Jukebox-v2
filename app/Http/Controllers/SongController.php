@@ -37,7 +37,11 @@ class SongController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->user();
+        return Playlist::create([
+            'name' => request('name'),
+            'user_id' => $user['id']
+        ]);
     }
 
     /**

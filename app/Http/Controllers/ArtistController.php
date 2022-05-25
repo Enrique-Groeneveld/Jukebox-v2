@@ -20,6 +20,14 @@ class ArtistController extends Controller
         return $artist;
     }
 
+    public function user(Artist $artist)
+    {
+       $artist['user'] = $artist->user();
+        // $data = array();
+
+        return $artist;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -21,8 +21,8 @@ Route::get('/song/{song}', [App\Http\Controllers\SongController::class, 'show'])
 Route::get('/songs', [App\Http\Controllers\SongController::class, 'index']);
 
 
-Route::get('/artist/{artist}', [App\Http\Controllers\ArtistController::class, 'show']);
 Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index']);
+Route::get('/artist/{artist}', [App\Http\Controllers\ArtistController::class, 'show']);
 
 Route::get('/genre/{genre}', [App\Http\Controllers\SongController::class, 'show']);
 Route::get('/genres', [App\Http\Controllers\SongController::class, 'index']);
@@ -39,5 +39,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/removeSong/{playlist}/{id}', [App\Http\Controllers\PlaylistController::class, 'destroyRow']);
 
     Route::get('/playlists', [App\Http\Controllers\PlaylistController::class, 'index']);
+    Route::get('/artistWithUser/{artist}', [App\Http\Controllers\ArtistController::class, 'user']);
+
     Route::get('check', [PassportAuthController::class, 'userInfo']);
 });
