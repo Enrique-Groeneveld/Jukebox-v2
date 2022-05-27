@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\Song;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,9 +80,34 @@ class ArtistController extends Controller
      * @param  \App\Models\Artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Artist $artist)
+    public function link()
     {
-        //
+        $user = auth()->user();
+        if(!$user['artist']){
+             Artist::create([
+            'name' => request('name'),
+            'user_id' => $user['id']
+        ]);
+            return Artist::create([
+                'name' => request('name'),
+                'user_id' => $user['id']
+            ]);
+        }
+        else{
+            abort(404, 'This user already has a artist');
+        }
+
+    }
+    public function edit(Artist $artist){
+        $user = auth()->user();
+        if ($artist['user_id'] == $user['id']){
+            return $artist->update([
+                'name' => request('name'),
+            ]);
+        }
+        else {
+            abort(404, 'invalid id or playlist doesnt belong to user');
+        }
     }
 
     /**
@@ -101,8 +128,25 @@ class ArtistController extends Controller
      * @param  \App\Models\Artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artist $artist)
+    public function delete(Artist $artist)
     {
-        //
+        $user = auth()->user();
+         $song = $artist->song;
+
+
+        // die();
+        $user->artist;
+        if ($artist['user_id'] == $user['id']){
+            foreach ($song as $single){
+                // $single->playlist()->detach($single);
+                $single->playlist()->detach();
+                $single->delete();
+             }
+            // $song->playlist()->detach();
+            return $artist->delete();
+        }
+        else {
+            abort(404, 'invalid id or artist doesnt belong to user');
+        }
     }
 }

@@ -34,6 +34,10 @@ Route::post('login', [PassportAuthController::class, 'login']);
 Route::get('/UserWithArtist/{user}', [App\Http\Controllers\UserController::class, 'artist']);
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('/artist/link', [App\Http\Controllers\ArtistController::class, 'link']);
+    Route::post('/artist/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'edit']);
+    Route::delete('/artist/delete/{artist}', [App\Http\Controllers\ArtistController::class, 'delete']);
+
     Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']);
     Route::post('/addsong/{playlist}', [App\Http\Controllers\PlaylistController::class, 'insertinto']);
     Route::post('/addPlaylist', [App\Http\Controllers\PlaylistController::class, 'create']);
