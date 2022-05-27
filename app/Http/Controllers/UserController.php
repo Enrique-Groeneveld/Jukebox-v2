@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +71,12 @@ class UserController extends Controller
         }catch (JWTException $e){
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-
         return response()->json(compact('user'));
+    }
+
+    public function artist(User $user)
+    {
+        $user['artist'] = $user->artist;
+        return $user;
     }
 }

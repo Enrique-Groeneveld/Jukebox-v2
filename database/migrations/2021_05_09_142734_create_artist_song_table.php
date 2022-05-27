@@ -13,14 +13,14 @@ class CreateArtistSongTable extends Migration
      */
     public function up()
     {
-        Schema::create('artist_song', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('artist_id');
-            $table->unsignedBigInteger('song_id');
-            $table->foreign("artist_id")->references("id")->on('artists');
-            $table->foreign("song_id")->references("id")->on('songs');
-            $table->timestamps();
-        });
+        // Schema::create('artist_song', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedBigInteger('artist_id');
+        //     $table->unsignedBigInteger('song_id');
+        //     $table->foreign("artist_id")->references("id")->on('artists');
+        //     $table->foreign("song_id")->references("id")->on('songs');
+        //     $table->timestamps();
+        // });
     }
 
     /**

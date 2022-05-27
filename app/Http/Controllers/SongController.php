@@ -23,8 +23,8 @@ class SongController extends Controller
         $data = array();
         $songs = Song::get();
         foreach($songs as $song) {
-            $song['Artist'] = $song->artist;
-            $song['Genre'] = $song->genre;
+            $song->artist;
+            $song->genre;
             // $song['Playlists'] = $song->playlist;
         }
         return JSON_encode($songs);
@@ -38,10 +38,28 @@ class SongController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return Playlist::create([
+        $artist = $user->artist;
+
+        $test = Song::create([
             'name' => request('name'),
-            'user_id' => $user['id']
+            'duration' => request('duration'),
+            'artist_id' => $artist['id'],
+            'genre_id' => request('genre')
         ]);
+
+
+        return  Song::create([
+            'name' => request('name'),
+            'duration' => request('duration'),
+            'artist_id' => $artist['id'],
+            'genre_id' => request('genre')
+        ]);// user may have input field name
+
+        // return Song::create([
+        //     'name' => request('name'),
+        //     'duration' => request('duration'),
+        //     'user_id' => $user['id']
+        // ]);
     }
 
     /**
@@ -67,9 +85,9 @@ class SongController extends Controller
         // dd($song);
         // $playlist = $song->playlist;
         $songData = $song;
-        $songData['Artists'] = $song->artist;
-        $songData['Genre'] = $song->genre;
-        $songData['Playlists'] = $song->playlist;
+         $song->artist;
+         $song->genre;
+         $song->playlist;
         // dd($song->playlist);
         return $songData;
     }
@@ -94,7 +112,18 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        //
+        $user = auth()->user();
+        $user->artist;
+        if ($song['artist_id'] == $user['artist']['id']){
+            return $song->update([
+                'name' => request('name'),
+                'duration' => request('duration'),
+                'genre_id' => request('genre'),
+            ]);
+        }
+        else {
+            abort(404, 'invalid id or playlist doesnt belong to user');
+        }
     }
 
     /**
@@ -117,6 +146,14 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        //
+        $user = auth()->user();
+        $user->artist;
+        if ($song['artist_id'] == $user['artist']['id']){
+            $song->playlist()->detach();
+            return $song->delete();
+        }
+        else {
+            abort(404, 'invalid id or song doesnt belong to artist');
+        }
     }
 }

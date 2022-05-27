@@ -14,14 +14,14 @@ class ArtistUser extends Migration
     public function up()
     {
 
-            Schema::create('artist_user', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('artist_id');
-                $table->foreign("artist_id")->references("id")->on('artists');
-                $table->unsignedBigInteger('user_id');
-                $table->foreign("user_id")->references("id")->on('users');
-                $table->timestamps();
-            });
+            // Schema::create('artist_user', function (Blueprint $table) {
+            //     $table->id();
+            //     $table->unsignedBigInteger('artist_id');
+            //     $table->foreign("artist_id")->references("id")->on('artists');
+            //     $table->unsignedBigInteger('user_id');
+            //     $table->foreign("user_id")->references("id")->on('users');
+            //     $table->timestamps();
+            // });
     }
 
     /**

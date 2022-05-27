@@ -88,20 +88,28 @@ class PlaylistController extends Controller
     public function insertinto(Playlist $playlist)
     {
         // $song = Song::where('id',request('songId'));
-        $result = false;
-        $songs = $playlist->song;
-        foreach ($songs as $song){
-            if($song['id'] == request('songId')){
-                $result = true;
+        $user = auth()->user();
+        if ($playlist['user_id'] == $user['id']){
+            $result = false;
+            $songs = $playlist->song;
+            foreach ($songs as $song){
+                if($song['id'] == request('songId')){
+                    $result = true;
+                }
+            }
+            if ($result){
+                abort(404, 'already exists');
+            }
+            else{
+                $song = Song::find(request('songId'));
+                return $playlist->song()->attach($song);
             }
         }
-        if ($result){
-            abort(404, 'already exists');
+        else {
+            abort(404, 'invalid id or playlist doesnt belong to user');
         }
-        else{
-            $song = Song::find(request('songId'));
-            return $playlist->song()->attach($song);
-        }
+
+
     }
 
     /**
@@ -112,7 +120,15 @@ class PlaylistController extends Controller
      */
     public function edit(Playlist $playlist)
     {
-        //
+        $user = auth()->user();
+        if ($playlist['user_id'] == $user['id']){
+            return $playlist->update([
+                'name' => request('name'),
+            ]);
+        }
+        else {
+            abort(404, 'invalid id or playlist doesnt belong to user');
+        }
     }
 
     /**
@@ -135,13 +151,26 @@ class PlaylistController extends Controller
      */
     public function destroyRow(Playlist $playlist, $id)
     {
-        $song = Song::where('id',$id)->first();
-        return $playlist->song()->detach($song);
+        $user = auth()->user();
+        if ($playlist['user_id'] == $user['id']){
+            $song = Song::where('id',$id)->first();
+            return $playlist->song()->detach($song);
+        }
+        else {
+            abort(404, 'invalid id or song doesnt belong to artist');
+        }
     }
 
     public function destroy(Playlist $playlist)
     {
-        $playlist->song()->detach();
-        return $playlist->delete();
+        $user = auth()->user();
+        if ($playlist['user_id'] == $user['id']){
+            $playlist->song()->detach();
+            return $playlist->delete();
+        }
+        else {
+            abort(404, 'invalid id or song doesnt belong to artist');
+        }
+
     }
 }

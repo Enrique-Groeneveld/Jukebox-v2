@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Song extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'name', 'duration', 'artist_id', 'genre_id'
+    ];
     /**
      * The roles that belong to the Song
      *
@@ -21,11 +23,11 @@ class Song extends Model
 
     public function genre()
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsTo(Genre::class);
     }
 
     public function artist()
     {
-        return $this->belongsToMany(Artist::class);
+        return $this->belongsTo(Artist::class);
     }
 }

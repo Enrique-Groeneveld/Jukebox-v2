@@ -22,7 +22,10 @@ class ArtistController extends Controller
 
     public function user(Artist $artist)
     {
-       $artist['user'] = $artist->user();
+        $artist['user'] = $artist->user;
+        // var_dump($artist['user']);
+        // die();
+    //    $artist['user'] =
         // $data = array();
 
         return $artist;

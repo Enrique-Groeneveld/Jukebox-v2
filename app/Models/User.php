@@ -38,9 +38,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    use HasFactory;
     public function artist()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->hasOne(Artist::class);
     }
 }
+

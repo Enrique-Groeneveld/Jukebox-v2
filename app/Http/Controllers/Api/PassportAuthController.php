@@ -53,7 +53,7 @@ class PassportAuthController extends Controller
     {
 
      $user = auth()->user();
-
+     $user['artist'] = $user->artist;
      return $user;
 
     }
