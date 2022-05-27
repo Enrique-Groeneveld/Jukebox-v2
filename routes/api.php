@@ -37,6 +37,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/artist/link', [App\Http\Controllers\ArtistController::class, 'link']);
     Route::post('/artist/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'edit']);
     Route::delete('/artist/delete/{artist}', [App\Http\Controllers\ArtistController::class, 'delete']);
+    Route::post('/genre/create', [App\Http\Controllers\GenreController::class, 'create']);
+    Route::post('/genre/edit/{genre}', [App\Http\Controllers\GenreController::class, 'edit']);
+    Route::delete('/genre/delete/{genre}', [App\Http\Controllers\GenreController::class, 'delete']);
 
     Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']);
     Route::post('/addsong/{playlist}', [App\Http\Controllers\PlaylistController::class, 'insertinto']);

@@ -138,11 +138,9 @@ class ArtistController extends Controller
         $user->artist;
         if ($artist['user_id'] == $user['id']){
             foreach ($song as $single){
-                // $single->playlist()->detach($single);
                 $single->playlist()->detach();
                 $single->delete();
              }
-            // $song->playlist()->detach();
             return $artist->delete();
         }
         else {

@@ -17,16 +17,6 @@ class GenreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-
-
-        // return Song::create([
-        //     'name' => request('name'),
-        //     'duration' => request('duration'),
-        //     'user_id' => $user['id']
-        // ]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,5 +46,39 @@ class GenreController extends Controller
         // $songData['Playlists'] = $song->playlist;
         // dd($song->playlist);
         // return $songData;
+    }
+    public function create()
+    {
+        $user = auth()->user();
+        return Genre::create([
+            'name' => request('name'),
+        ]);
+    }
+
+    public function edit(Genre $genre){
+        $user = auth()->user();
+
+            return $genre->update([
+                'name' => request('name'),
+            ]);
+    }
+
+    public function delete(Genre $genre)
+    {
+        $user = auth()->user();
+        $song = $genre->song;
+        if($genre['id'] == 1){
+
+        abort(404, 'Cant delete genre 1');
+        }
+        else {
+            foreach ($song as $single){
+                $single->update([
+                    'genre_id' => 1,
+                ]);
+                }
+            return $genre->delete();
+        }
+
     }
 }

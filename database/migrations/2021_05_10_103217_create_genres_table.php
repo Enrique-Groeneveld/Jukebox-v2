@@ -18,6 +18,12 @@ class CreateGenresTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+        DB::table('genres')->insert(
+            array(
+                'id' => 1,
+                'name' => 'Unknown',
+            )
+        );
     }
 
     /**
