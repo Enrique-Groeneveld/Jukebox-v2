@@ -40,14 +40,6 @@ class SongController extends Controller
         $user = auth()->user();
         $artist = $user->artist;
 
-        $test = Song::create([
-            'name' => request('name'),
-            'duration' => request('duration'),
-            'artist_id' => $artist['id'],
-            'genre_id' => request('genre')
-        ]);
-
-
         return  Song::create([
             'name' => request('name'),
             'duration' => request('duration'),

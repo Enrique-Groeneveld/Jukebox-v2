@@ -141,7 +141,8 @@ class ArtistController extends Controller
                 $single->playlist()->detach();
                 $single->delete();
              }
-            return $artist->delete();
+             $artist->delete();
+            return  $artist->delete();
         }
         else {
             abort(404, 'invalid id or artist doesnt belong to user');

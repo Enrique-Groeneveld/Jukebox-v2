@@ -9,7 +9,8 @@ class GenreController extends Controller
 {
     public function index()
     {
-        return Genre::get();
+        return  Genre::where('id','!=',1)->get();
+
     }
 
     /**
@@ -57,10 +58,15 @@ class GenreController extends Controller
 
     public function edit(Genre $genre){
         $user = auth()->user();
-
+        if($genre['id'] !== 1){
             return $genre->update([
                 'name' => request('name'),
             ]);
+        }
+        else{
+            abort(404, 'Cant delete genre 1');
+        }
+
     }
 
     public function delete(Genre $genre)
@@ -68,8 +74,7 @@ class GenreController extends Controller
         $user = auth()->user();
         $song = $genre->song;
         if($genre['id'] == 1){
-
-        abort(404, 'Cant delete genre 1');
+            abort(404, 'Cant delete genre 1');
         }
         else {
             foreach ($song as $single){
