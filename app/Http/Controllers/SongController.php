@@ -84,6 +84,26 @@ class SongController extends Controller
         return $songData;
     }
 
+    public function showQueue()
+    {
+        $songData = request("queue");
+        foreach ($songData as $index=>&$song){
+            $song = Song::find($song);
+            $song['queueId'] = $index;
+            $song->artist;
+            $song->genre;
+        }
+        //  dd($song);
+        //  $playlist = $song->playlist;
+        // $songData = $song;
+        //  $song->artist;
+        //  $song->genre;
+        //  $song->playlist;
+        // dd($song->playlist);
+
+        return $songData;
+    }
+
     public function showall()
     {
         $data = array();
